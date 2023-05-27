@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:receipt_to_spreadsheet/Models/shared_preferences_proxy.dart';
 import 'package:receipt_to_spreadsheet/screen/camera_screen.dart';
-
-import 'screen/New User Setup/start_user_set_up_screen.dart';
+import 'package:receipt_to_spreadsheet/screen/starting_action_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,16 +18,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: kDebugMode,
-      theme: ThemeData(
-          primarySwatch: Colors.purple,
-          primaryTextTheme: const TextTheme(
-            bodyMedium: TextStyle(color: Colors.white),
-          )),
-      home: const StartUserSetup(),
-      // home: TestContainer(),
-      // home: const StartingActionScreen()
-      // TODO: normally StartingActionScreen()
-    );
+        debugShowCheckedModeBanner: kDebugMode,
+        theme: ThemeData(
+            primarySwatch: Colors.purple,
+            primaryTextTheme: const TextTheme(
+              bodyMedium: TextStyle(color: Colors.white),
+            )),
+        // home: const StartUserSetup(),
+        // home: TestContainer(),
+        home: const StartingActionScreen()
+        // TODO: normally StartingActionScreen()
+        );
   }
 }

@@ -10,14 +10,12 @@ import 'package:receipt_to_spreadsheet/Models/ocr_box_data.dart';
 import 'package:receipt_to_spreadsheet/Utilities/secure_storage.dart';
 import 'package:receipt_to_spreadsheet/Utilities/secure_storage_constants.dart';
 import 'package:receipt_to_spreadsheet/Widgets/Alerts/slide_information_alert.dart';
-import 'package:receipt_to_spreadsheet/Widgets/Alerts/success_alert_box.dart';
 import 'package:receipt_to_spreadsheet/Widgets/OCR%20Box%20Instructions/color_guide.instruction.dart';
 import 'package:receipt_to_spreadsheet/Widgets/OCRBox.dart';
 import 'package:receipt_to_spreadsheet/Widgets/Scaffold/receipt_scaffold_toggle_appbar.dart';
 import 'package:receipt_to_spreadsheet/screen/spreadsheet_submission_summary_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../Proxies/google_sheets_proxy.dart';
 import '../Models/image_dimensions.dart';
 import '../Widgets/Alerts/error_alert_box.dart';
 import '../Widgets/OCR Box Instructions/long_press_instruction.dart';
@@ -194,29 +192,27 @@ class _OcrResponseScreenState extends State<OcrResponseScreen> {
                               getAndVerifyOCRBoxes(createdBoxes, context);
                           if (result != null) {
                             // TODO: Check for null
-                            print(await SecureStorage.readFromKey(
-                                SecureStorageConstants.SPREADSHEET_IDS));
-                            var proxy = GoogleSheetsProxy(
-                                (await SecureStorage.readFromKey(
-                                    SecureStorageConstants.SPREADSHEET_IDS))!);
-                            proxy.waitForCompleteSetUp().then((_) {
-                              proxy.addOCRBoxesToSheet(result);
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return const SuccessAlertBox();
-                                  }).then((_) {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            SpreadsheetSubmissionSummary(
-                                              categoryAmountPairs: result,
-                                            )));
-                                // Navigator.of(context)
-                                //     .popUntil((route) => route.isFirst);
-                              });
-                            });
+                            // var proxy = GoogleSheetsProxy(
+                            //     (await SecureStorage.readFromKey(
+                            //         SecureStorageConstants.SPREADSHEET_IDS))!);
+                            // proxy.waitForCompleteSetUp().then((_) {
+                            //   proxy.addOCRBoxesToSheet(result);
+                            //   showDialog(
+                            //       context: context,
+                            //       builder: (BuildContext context) {
+                            //         return const SuccessAlertBox();
+                            //       }).then((_) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        SpreadsheetSubmissionSummary(
+                                          categoryAmountPairs: result,
+                                        )));
+                            // Navigator.of(context)
+                            //     .popUntil((route) => route.isFirst);
+                            // });
+                            // });
                           }
                         },
                         color: Colors.white,

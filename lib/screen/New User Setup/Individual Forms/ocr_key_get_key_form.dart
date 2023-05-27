@@ -118,7 +118,7 @@ class _OCRKeyFormGetKeyState extends State<OCRKeyFormGetKey> {
             child: MovingArrowWidget(
                 color: Colors.white,
                 verticalHeight: 25.0,
-                floatingText: "Swipe when you have Key",
+                floatingText: "Swipe Down when you have a Key",
                 textStyle: const TextStyle(color: Colors.white, fontSize: 16)),
           )
         ],

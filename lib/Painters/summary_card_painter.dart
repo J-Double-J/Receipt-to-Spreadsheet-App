@@ -12,9 +12,12 @@ class SummaryCardPainter extends CustomPainter {
     final double width = size.width;
     final double height = size.height;
 
-    final Paint paintPurple = Paint()..color = Colors.purple;
-    final Paint paintPink = Paint()..color = Colors.purple;
+    final Paint paintPurple = Paint()
+      ..color = const Color.fromARGB(255, 107, 49, 216);
+    final Paint paintPink = Paint()
+      ..color = const Color.fromARGB(255, 107, 49, 216);
 
+    //TODO: Delete this quick reference: Color.fromARGB(255, 107, 49, 216)
     // Define the line equation
     double lineEquation(double x) {
       final double xOffset = width / 2;

@@ -3,6 +3,7 @@ import 'package:receipt_to_spreadsheet/Widgets/Scaffold/slide_out_settings.dart'
 
 class ReceiptScaffold extends StatefulWidget {
   final List<Widget> children;
+  final Color scaffoldColor;
   final String? title;
   final bool automaticallyImplyLeading;
   final bool hasHelp;
@@ -11,6 +12,7 @@ class ReceiptScaffold extends StatefulWidget {
   const ReceiptScaffold(
       {super.key,
       required this.children,
+      this.scaffoldColor = Colors.purple,
       this.title,
       this.hasHelp = false,
       this.helpCallback,
@@ -57,6 +59,7 @@ class _ReceiptScaffoldState extends State<ReceiptScaffold>
     return Scaffold(
         appBar: AppBar(
             title: Text(widget.title ?? ""),
+            backgroundColor: widget.scaffoldColor,
             automaticallyImplyLeading: widget.automaticallyImplyLeading,
             actions: [
               widget.hasHelp

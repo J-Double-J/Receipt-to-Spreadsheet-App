@@ -59,22 +59,48 @@ class GoogleSheetsProxy {
     }
   }
 
-  Future<bool> addOCRBoxesToSheet(Map<String, Decimal> entries) async {
+  // // TODO: Remove old method
+  // Future<bool> addOCRBoxesToSheet(Map<String, Decimal> entries) async {
+  //   List<Map<String, dynamic>> rowEntries = [];
+  //   var date = DateTime.now();
+  //   entries.forEach((key, value) {
+  //     if (value <= Decimal.zero) {
+  //       return;
+  //     }
+
+  //     var expenseEntry = ExpenseDataEntry(
+  //         date: date,
+  //         expenseCode: key,
+  //         cost: value.toString(),
+  //         purchaser: "Josh");
+
+  //     rowEntries.add(expenseEntry.toJson());
+  //   });
+
+  //   if (rowEntries.isEmpty) {
+  //     return false;
+  //   } else {
+  //     return addRows(rowEntries);
+  //   }
+  // }
+
+  Future<bool> addOCRBoxesToSheet(
+      List<MapEntry<String, Decimal>> entries) async {
     List<Map<String, dynamic>> rowEntries = [];
     var date = DateTime.now();
-    entries.forEach((key, value) {
-      if (value <= Decimal.zero) {
-        return;
+    for (var entry in entries) {
+      if (entry.value <= Decimal.zero) {
+        continue;
       }
 
       var expenseEntry = ExpenseDataEntry(
           date: date,
-          expenseCode: key,
-          cost: value.toString(),
+          expenseCode: entry.key,
+          cost: entry.value.toString(),
           purchaser: "Josh");
 
       rowEntries.add(expenseEntry.toJson());
-    });
+    }
 
     if (rowEntries.isEmpty) {
       return false;

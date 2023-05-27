@@ -169,10 +169,13 @@ class _CategoriesFormState extends State<CategoriesForm>
                     }
                   },
                   minWidth: MediaQuery.of(context).size.width * 0.7,
-                  color: Colors.purple,
+                  color: Colors.white,
                   child: const Text(
                     "Continue",
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(
+                        color: Color.fromARGB(255, 107, 49, 216),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18),
                   ),
                 ),
               )
