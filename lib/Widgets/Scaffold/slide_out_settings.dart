@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../screen/connection_settings_screen.dart';
 import '../../screen/general_settings_screen.dart';
 
 class SlideOutSettings extends StatefulWidget {
@@ -69,7 +70,10 @@ class _SlideOutSettingsState extends State<SlideOutSettings> {
               child: MaterialButton(
                 color: Colors.white,
                 onPressed: () {
-                  print("Hello");
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ConnectionSettings()));
                 },
                 child: const Text(
                   "Connection Settings",

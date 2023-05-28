@@ -22,7 +22,8 @@ class FileManager {
     return Future.value();
   }
 
-  static Future<String> readSpreadsheetMetadataFromFile() async {
+  static Future<List<SpreadsheetMetadata>>
+      readSpreadsheetMetadataFromFile() async {
     Directory appDir = await getApplicationDocumentsDirectory();
     File file = File('${appDir.path}/$metadataFileName');
 
@@ -30,6 +31,10 @@ class FileManager {
 
     String jsonString = utf8.decode(fileBytes);
 
-    return jsonString;
+    List<dynamic> jsonList = jsonDecode(jsonString);
+    List<SpreadsheetMetadata> metadataObjects =
+        jsonList.map((json) => SpreadsheetMetadata.fromJson(json)).toList();
+
+    return metadataObjects;
   }
 }
