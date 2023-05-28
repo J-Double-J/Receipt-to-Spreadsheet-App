@@ -6,9 +6,29 @@ class SpreadsheetMetadata {
   late List<String> worksheetNames;
   String? defaultWorksheet;
 
-  SpreadsheetMetadata(this.sheetID) {
+  SpreadsheetMetadata._create(this.sheetID);
+  SpreadsheetMetadata._fromJson(this.sheetTitle, this.sheetID,
+      this.worksheetNames, this.defaultWorksheet);
+
+  static Future<SpreadsheetMetadata> create(String sheetID) async {
+    final instance = SpreadsheetMetadata._create(sheetID);
+
+    await instance._initialize(sheetID);
+
+    return instance;
+  }
+
+  factory SpreadsheetMetadata.fromJson(Map<String, dynamic> json) {
+    return SpreadsheetMetadata._fromJson(
+        json["sheetTitle"],
+        json["sheetID"],
+        json["worksheetNames"].toString().split(',').toList(),
+        json["defaultWorksheet"]);
+  }
+
+  Future<void> _initialize(String sheetID) async {
     var proxy = GoogleSheetsProxy(sheetID);
-    proxy.waitForCompleteSetUp().then((_) {
+    await proxy.waitForCompleteSetUp().then((_) {
       sheetTitle = proxy.getSheetTitle();
       worksheetNames = proxy.getWorksheetTitles();
     });
@@ -20,5 +40,14 @@ class SpreadsheetMetadata {
     } else {
       throw ArgumentError.value(worksheet);
     }
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "sheetTitle": sheetTitle,
+      "sheetID": sheetID,
+      "worksheetNames": worksheetNames.join(','),
+      "defaultWorksheet": defaultWorksheet
+    };
   }
 }

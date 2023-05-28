@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:receipt_to_spreadsheet/screen/New%20User%20Setup/Individual%20Forms/categories_form.dart';
+import 'package:receipt_to_spreadsheet/screen/New%20User%20Setup/Individual%20Forms/finalizing_setup.dart';
 import 'package:receipt_to_spreadsheet/screen/New%20User%20Setup/Individual%20Forms/google_sheets_url_form.dart';
 import 'package:receipt_to_spreadsheet/screen/New%20User%20Setup/Individual%20Forms/ocr_key_page_view.dart';
 import 'package:receipt_to_spreadsheet/screen/starting_action_screen.dart';
@@ -23,12 +24,11 @@ class _GatherInformationFormState extends State<GatherInformationForm> {
   void initState() {
     super.initState();
     _children = [
-      GoogleSheetsURLForm(
-        callback: _onContinue,
-      ),
+      GoogleSheetsURLForm(callback: _onContinue),
       OCRKeyPageView(callback: _onContinue),
       GetNameForm(callback: _onContinue),
       CategoriesForm(callback: _onContinue),
+      FinalizingSetup(callback: _onContinue)
     ];
   }
 
