@@ -43,7 +43,7 @@ class _GoogleSheetsPageViewState extends State<GoogleSheetsPageView> {
 
   void _goToNextPage() {
     _pageController.nextPage(
-        duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
+        duration: const Duration(milliseconds: 1200), curve: Curves.easeInOut);
   }
 
   void _onContinue() {

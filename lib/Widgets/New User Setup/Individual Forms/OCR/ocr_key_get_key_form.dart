@@ -61,7 +61,7 @@ class _OCRKeyFormGetKeyState extends State<OCRKeyFormGetKey> {
                               style: TextStyle(
                                   color: Colors.purple,
                                   fontWeight: FontWeight.w500,
-                                  fontSize: 16),
+                                  fontSize: 20),
                             ),
                           ),
                           MaterialButton(
@@ -82,7 +82,7 @@ class _OCRKeyFormGetKeyState extends State<OCRKeyFormGetKey> {
                               style: TextStyle(
                                   color: Colors.purple,
                                   fontWeight: FontWeight.w500,
-                                  fontSize: 16),
+                                  fontSize: 20),
                             ),
                           ),
                           MaterialButton(
@@ -102,7 +102,7 @@ class _OCRKeyFormGetKeyState extends State<OCRKeyFormGetKey> {
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w500,
-                                    fontSize: 16)),
+                                    fontSize: 20)),
                           ),
                         ],
                       ),

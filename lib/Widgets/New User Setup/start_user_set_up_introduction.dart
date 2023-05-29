@@ -18,7 +18,7 @@ class _StartUserSetupIntroductionState
     return Expanded(
       child: Center(
           child: Container(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(15),
         height: MediaQuery.of(context).size.height * 0.65,
         child:
             Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -49,7 +49,7 @@ class _StartUserSetupIntroductionState
             child: const Text(
               "Let's Get Started!",
               style: TextStyle(
-                  color: Colors.purple,
+                  color: Color.fromARGB(255, 107, 49, 216),
                   fontSize: 18,
                   fontWeight: FontWeight.w500),
             ),

@@ -3,6 +3,7 @@ import 'package:receipt_to_spreadsheet/Utilities/google_sheets_id_extractor.dart
 import 'package:receipt_to_spreadsheet/Utilities/secure_storage_constants.dart';
 
 import '../../../../Utilities/secure_storage.dart';
+import '../../../../Utilities/common.dart';
 
 class GoogleSheetsURLForm extends StatefulWidget {
   final void Function() callback;
@@ -40,7 +41,7 @@ class _GoogleSheetsURLFormState extends State<GoogleSheetsURLForm> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     const Text(
-                      "Please copy and paste the URL of your Google Spreadsheet here",
+                      "What is the URL of the Google Spreadsheet we should update?",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 24,
@@ -93,6 +94,7 @@ class _GoogleSheetsURLFormState extends State<GoogleSheetsURLForm> {
                         )),
                     MaterialButton(
                         onPressed: () {
+                          Common.closeKeyboard(context);
                           setState(() {
                             isLoading = true;
                           });
@@ -108,14 +110,19 @@ class _GoogleSheetsURLFormState extends State<GoogleSheetsURLForm> {
                               });
                               widget.callback();
                             });
+                          } else {
+                            setState(() {
+                              isLoading = false;
+                            });
                           }
                         },
                         minWidth: MediaQuery.of(context).size.width * 0.7,
                         color: Colors.white,
                         child: const Text("Continue",
                             style: TextStyle(
-                                color: Colors.purple,
-                                fontWeight: FontWeight.w700)))
+                                color: Color.fromARGB(255, 107, 49, 216),
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500)))
                   ]),
             ),
           ),

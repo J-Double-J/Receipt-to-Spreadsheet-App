@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:receipt_to_spreadsheet/Utilities/secure_storage.dart';
 import 'package:receipt_to_spreadsheet/Utilities/secure_storage_constants.dart';
 
+import '../../../Utilities/common.dart';
+
 class GetNameForm extends StatefulWidget {
   final void Function() callback;
 
@@ -27,7 +29,7 @@ class _GetNameFormState extends State<GetNameForm> {
       child: Center(
         child: Container(
           padding: const EdgeInsets.all(8),
-          height: MediaQuery.of(context).size.height * 0.5,
+          height: MediaQuery.of(context).size.height * 0.65,
           width: double.infinity,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -37,22 +39,24 @@ class _GetNameFormState extends State<GetNameForm> {
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 28,
-                    fontWeight: FontWeight.bold),
+                    fontWeight: FontWeight.w500),
               ),
               const Text(
                   "This is the name that will appear in the spreadsheet as being responsible for paying.",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: Colors.white,
-                      fontSize: 17,
-                      fontWeight: FontWeight.w500)),
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400)),
               Form(
                   key: _formKey,
                   child: Container(
                     margin: const EdgeInsets.symmetric(horizontal: 12),
                     child: TextFormField(
                       controller: _nameController,
-                      style: TextStyle(color: Theme.of(context).primaryColor),
+                      style: const TextStyle(
+                          color: Color.fromARGB(255, 107, 49, 216),
+                          fontSize: 18),
                       decoration: InputDecoration(
                           errorBorder: const OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.pink),
@@ -73,16 +77,20 @@ class _GetNameFormState extends State<GetNameForm> {
                   )),
               MaterialButton(
                   onPressed: () {
+                    Common.closeKeyboard(context);
                     if (_formKey.currentState!.validate()) {
                       SecureStorage.writeToKey(
                           SecureStorageConstants.NAME, _nameController.text);
                       widget.callback();
                     }
                   },
+                  minWidth: MediaQuery.of(context).size.width * 0.7,
                   color: Colors.white,
                   child: const Text("Continue",
                       style: TextStyle(
-                          color: Colors.purple, fontWeight: FontWeight.w700)))
+                          color: Color.fromARGB(255, 107, 49, 216),
+                          fontWeight: FontWeight.w500,
+                          fontSize: 20)))
             ],
           ),
         ),

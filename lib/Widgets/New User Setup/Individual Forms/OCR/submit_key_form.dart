@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../Proxies/ocr_proxy.dart';
+import '../../../../Utilities/common.dart';
 import '../../../../Utilities/secure_storage.dart';
 import '../../../../Utilities/secure_storage_constants.dart';
 
@@ -51,14 +52,15 @@ class _SubmitKeyFormState extends State<SubmitKeyForm> {
       child: Stack(
         children: [
           Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                const SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  child: Column(children: const [
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height * 0.65,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Column(children: const [
                     Text(
                       "Input your OCR Key",
                       style: TextStyle(
@@ -77,55 +79,60 @@ class _SubmitKeyFormState extends State<SubmitKeyForm> {
                           fontWeight: FontWeight.w500),
                     ),
                   ]),
-                ),
-                Form(
-                  key: _formKey,
-                  child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.85,
-                      child: TextFormField(
-                        style: TextStyle(color: Theme.of(context).primaryColor),
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          errorStyle: const TextStyle(color: Colors.white),
-                          border: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                width: 2,
-                                color: Color.fromARGB(255, 182, 59, 204)),
-                            borderRadius: BorderRadius.circular(20.0),
+                  Form(
+                    key: _formKey,
+                    child: SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.85,
+                        child: TextFormField(
+                          style:
+                              TextStyle(color: Theme.of(context).primaryColor),
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+                            errorStyle: const TextStyle(color: Colors.white),
+                            border: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  width: 2,
+                                  color: Color.fromARGB(255, 182, 59, 204)),
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
                           ),
-                        ),
-                        controller: _keyController,
-                        validator: (value) {
-                          // The validator here should only be called when the async call returns false. This will
-                          // always return an error for the form here.
-                          if (value == null || value.isEmpty) {
-                            return "You must enter a key.";
-                          }
+                          controller: _keyController,
+                          validator: (value) {
+                            // The validator here should only be called when the async call returns false. This will
+                            // always return an error for the form here.
+                            if (value == null || value.isEmpty) {
+                              return "You must enter a key.";
+                            }
 
-                          return "This key hasn't been activated yet, or is not valid. Try again.";
-                        },
-                      )),
-                ),
-                MaterialButton(
-                  onPressed: () async {
-                    verifyAndStoreOCRKey().then((verified) {
-                      if (verified) {
-                        widget.callback();
-                      }
-                    });
-                  },
-                  minWidth: MediaQuery.of(context).size.width * 0.7,
-                  color: const Color.fromARGB(255, 182, 59, 204),
-                  child: const Text(
-                    "Continue",
-                    style: TextStyle(color: Colors.white),
+                            return "This key hasn't been activated yet, or is not valid. Try again.";
+                          },
+                        )),
                   ),
-                ),
-                const SizedBox(
-                  height: 10,
-                )
-              ],
+                  MaterialButton(
+                    onPressed: () async {
+                      Common.closeKeyboard(context);
+                      verifyAndStoreOCRKey().then((verified) {
+                        if (verified) {
+                          widget.callback();
+                        }
+                      });
+                    },
+                    minWidth: MediaQuery.of(context).size.width * 0.7,
+                    color: Colors.white,
+                    child: const Text(
+                      "Continue",
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 107, 49, 216),
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  )
+                ],
+              ),
             ),
           ),
           isLoading

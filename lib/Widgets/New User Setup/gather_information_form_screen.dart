@@ -60,7 +60,7 @@ class _GatherInformationFormState extends State<GatherInformationForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       body: Container(
         height: double.infinity,
         color: const Color.fromARGB(255, 107, 49, 216),
