@@ -6,7 +6,9 @@ import '../../../Utilities/secure_storage.dart';
 
 class GoogleSheetsURLForm extends StatefulWidget {
   final void Function() callback;
-  const GoogleSheetsURLForm({super.key, required this.callback});
+  final Future<void> Function(String) setSheetIDCallback;
+  const GoogleSheetsURLForm(
+      {super.key, required this.callback, required this.setSheetIDCallback});
 
   @override
   State<GoogleSheetsURLForm> createState() => _GoogleSheetsURLFormState();
@@ -15,6 +17,8 @@ class GoogleSheetsURLForm extends StatefulWidget {
 class _GoogleSheetsURLFormState extends State<GoogleSheetsURLForm> {
   final _formKey = GlobalKey<FormState>();
   final _urlController = TextEditingController();
+
+  bool isLoading = false;
 
   @override
   void dispose() {
@@ -25,81 +29,105 @@ class _GoogleSheetsURLFormState extends State<GoogleSheetsURLForm> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Center(
-        child: Container(
-          padding: const EdgeInsets.all(8),
-          height: MediaQuery.of(context).size.height * 0.5,
-          width: double.infinity,
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                const Text(
-                  "Please copy and paste the URL of your Google Spreadsheet here",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                Form(
-                    key: _formKey,
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 12),
-                      child: TextFormField(
-                        controller: _urlController,
-                        style: TextStyle(color: Theme.of(context).primaryColor),
-                        decoration: InputDecoration(
-                            errorBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.pink),
-                            ),
-                            filled: true,
-                            fillColor: Colors.white,
-                            hintText:
-                                "https://docs.google.com/spreadsheets/d/exampleIDHere/",
-                            hintStyle: TextStyle(color: Colors.grey.shade300),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0)),
-                            errorStyle: const TextStyle(color: Colors.white)),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Please enter a URL";
-                          }
+      child: Stack(
+        children: [
+          Center(
+            child: Container(
+              padding: const EdgeInsets.all(8),
+              height: MediaQuery.of(context).size.height * 0.5,
+              width: double.infinity,
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    const Text(
+                      "Please copy and paste the URL of your Google Spreadsheet here",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.w400,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    Form(
+                        key: _formKey,
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 12),
+                          child: TextFormField(
+                            controller: _urlController,
+                            style: TextStyle(
+                                color: Theme.of(context).primaryColor),
+                            decoration: InputDecoration(
+                                errorBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.pink),
+                                ),
+                                filled: true,
+                                fillColor: Colors.white,
+                                hintText:
+                                    "https://docs.google.com/spreadsheets/d/exampleIDHere/",
+                                hintStyle:
+                                    TextStyle(color: Colors.grey.shade300),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20.0)),
+                                errorStyle:
+                                    const TextStyle(color: Colors.white)),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Please enter a URL";
+                              }
 
-                          if (GoogleSheetsIDExtractor.isGoogleSheetsURL(
-                              value)) {
-                            String? id =
-                                GoogleSheetsIDExtractor.extractIDFromURL(value);
-                            if (id != null) {
-                              return null;
-                            } else {
-                              return "Please make sure to include the full link to your specific spreadsheet.";
-                            }
-                          } else {
-                            return "Please use a URL that is a Google Spreadsheets link";
+                              if (GoogleSheetsIDExtractor.isGoogleSheetsURL(
+                                  value)) {
+                                String? id =
+                                    GoogleSheetsIDExtractor.extractIDFromURL(
+                                        value);
+                                if (id != null) {
+                                  return null;
+                                } else {
+                                  return "Please make sure to include the full link to your specific spreadsheet.";
+                                }
+                              } else {
+                                return "Please use a URL that is a Google Spreadsheets link";
+                              }
+                            },
+                          ),
+                        )),
+                    MaterialButton(
+                        onPressed: () {
+                          setState(() {
+                            isLoading = true;
+                          });
+                          if (_formKey.currentState!.validate()) {
+                            String id =
+                                GoogleSheetsIDExtractor.extractIDFromURL(
+                                    _urlController.text)!;
+                            SecureStorage.writeToKey(
+                                SecureStorageConstants.SPREADSHEET_IDS, id);
+                            widget.setSheetIDCallback(id).then((_) {
+                              setState(() {
+                                isLoading = false;
+                              });
+                              widget.callback();
+                            });
                           }
                         },
-                      ),
-                    )),
-                MaterialButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        print(_urlController.text);
-
-                        String id = GoogleSheetsIDExtractor.extractIDFromURL(
-                            _urlController.text)!;
-                        print(id);
-                        SecureStorage.writeToKey(
-                            SecureStorageConstants.SPREADSHEET_IDS, id);
-                        widget.callback();
-                      }
-                    },
-                    color: Colors.white,
-                    child: const Text("Continue",
-                        style: TextStyle(
-                            color: Colors.purple, fontWeight: FontWeight.w700)))
-              ]),
-        ),
+                        minWidth: MediaQuery.of(context).size.width * 0.7,
+                        color: Colors.white,
+                        child: const Text("Continue",
+                            style: TextStyle(
+                                color: Colors.purple,
+                                fontWeight: FontWeight.w700)))
+                  ]),
+            ),
+          ),
+          isLoading
+              ? Container(
+                  color: Colors.black.withOpacity(0.5),
+                  child: const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              : const SizedBox(),
+        ],
       ),
     );
   }

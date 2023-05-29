@@ -31,7 +31,6 @@ class _StartUserSetupState extends State<StartUserSetup> {
                   alignment: Alignment.bottomRight,
                   child: MaterialButton(
                     onPressed: () {
-                      Navigator.of(context).pop();
                       Navigator.push(
                           context,
                           MaterialPageRoute(

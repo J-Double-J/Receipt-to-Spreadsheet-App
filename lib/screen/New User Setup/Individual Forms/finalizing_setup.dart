@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:receipt_to_spreadsheet/Models/spreadsheet_metadata.dart';
-import 'package:receipt_to_spreadsheet/Utilities/secure_storage_constants.dart';
 
 import '../../../Utilities/file_manager.dart';
-import '../../../Utilities/secure_storage.dart';
 
 class FinalizingSetup extends StatefulWidget {
   final void Function() callback;
-  const FinalizingSetup({super.key, required this.callback});
+  final SpreadsheetMetadata? spreadsheetMetadata;
+  const FinalizingSetup(
+      {super.key, required this.callback, this.spreadsheetMetadata});
 
   @override
   State<FinalizingSetup> createState() => _FinalizingSetupState();
@@ -45,21 +45,12 @@ class _FinalizingSetupState extends State<FinalizingSetup> {
   }
 
   void executeFinalSetup() async {
-    // There shouldn't be more than one at this point, but this key should be holding a list.
-    List<String>? idsFound = await SecureStorage.readListFromKey(
-        SecureStorageConstants.SPREADSHEET_IDS);
-
-    if (idsFound == null) {
-      return;
+    print(widget.spreadsheetMetadata);
+    if (widget.spreadsheetMetadata != null) {
+      FileManager.saveSpreadsheetMetadata([widget.spreadsheetMetadata!])
+          .then((_) {
+        widget.callback();
+      });
     }
-
-    List<SpreadsheetMetadata> metadataObjects = [];
-    for (var id in idsFound) {
-      metadataObjects.add(await SpreadsheetMetadata.create(id));
-    }
-
-    FileManager.saveSpreadsheetMetadata(metadataObjects).then((_) {
-      widget.callback();
-    });
   }
 }
