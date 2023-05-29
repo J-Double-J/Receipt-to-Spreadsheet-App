@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:receipt_to_spreadsheet/Widgets/Alerts/alert_box.dart';
-import 'package:receipt_to_spreadsheet/screen/New%20User%20Setup/gather_information_form_screen.dart';
+import 'package:receipt_to_spreadsheet/Widgets/New%20User%20Setup/gather_information_form_screen.dart';
 
 class StartUserSetup extends StatefulWidget {
   const StartUserSetup({super.key});

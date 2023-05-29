@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:receipt_to_spreadsheet/screen/New%20User%20Setup/Individual%20Forms/ocr_key_get_key_form.dart';
-import 'package:receipt_to_spreadsheet/screen/New%20User%20Setup/Individual%20Forms/submit_key_form.dart';
+import 'package:receipt_to_spreadsheet/Widgets/New%20User%20Setup/Individual%20Forms/OCR/submit_key_form.dart';
+
+import 'ocr_key_get_key_form.dart';
 
 class OCRKeyPageView extends StatefulWidget {
   final void Function() callback;

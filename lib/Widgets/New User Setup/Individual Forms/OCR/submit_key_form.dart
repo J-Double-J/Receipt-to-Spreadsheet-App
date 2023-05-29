@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../Proxies/ocr_proxy.dart';
-import '../../../Utilities/secure_storage.dart';
-import '../../../Utilities/secure_storage_constants.dart';
+import '../../../../Proxies/ocr_proxy.dart';
+import '../../../../Utilities/secure_storage.dart';
+import '../../../../Utilities/secure_storage_constants.dart';
 
 class SubmitKeyForm extends StatefulWidget {
   final void Function() callback;

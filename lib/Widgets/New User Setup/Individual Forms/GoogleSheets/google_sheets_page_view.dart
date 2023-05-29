@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:receipt_to_spreadsheet/screen/New%20User%20Setup/Individual%20Forms/google_sheets_default_worksheet_form.dart';
-import 'package:receipt_to_spreadsheet/screen/New%20User%20Setup/Individual%20Forms/google_sheets_url_form.dart';
+import 'package:receipt_to_spreadsheet/Widgets/New%20User%20Setup/Individual%20Forms/GoogleSheets/google_sheets_default_worksheet_form.dart';
 
-import '../../../Models/spreadsheet_metadata.dart';
+import '../../../../Models/spreadsheet_metadata.dart';
+import 'google_sheets_url_form.dart';
 
 class GoogleSheetsPageView extends StatefulWidget {
   final void Function() callback;

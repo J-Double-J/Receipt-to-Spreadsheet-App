@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:receipt_to_spreadsheet/Widgets/moving_arrow_widget.dart';
-import 'package:receipt_to_spreadsheet/screen/New%20User%20Setup/ocr_information.dart';
+import 'package:receipt_to_spreadsheet/Widgets/New%20User%20Setup/ocr_information.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class OCRKeyFormGetKey extends StatefulWidget {

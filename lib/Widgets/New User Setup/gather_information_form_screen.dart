@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:receipt_to_spreadsheet/screen/New%20User%20Setup/Individual%20Forms/categories_form.dart';
-import 'package:receipt_to_spreadsheet/screen/New%20User%20Setup/Individual%20Forms/finalizing_setup.dart';
-import 'package:receipt_to_spreadsheet/screen/New%20User%20Setup/Individual%20Forms/ocr_key_page_view.dart';
+import 'package:receipt_to_spreadsheet/Widgets/New%20User%20Setup/Individual%20Forms/categories_form.dart';
+import 'package:receipt_to_spreadsheet/Widgets/New%20User%20Setup/Individual%20Forms/finalizing_setup.dart';
 import 'package:receipt_to_spreadsheet/screen/starting_action_screen.dart';
 
 import '../../Models/spreadsheet_metadata.dart';
-import '../../Widgets/moving_circles.dart';
+import '../moving_circles.dart';
+import 'Individual Forms/GoogleSheets/google_sheets_page_view.dart';
+import 'Individual Forms/OCR/ocr_key_page_view.dart';
 import 'Individual Forms/get_name_form.dart';
-import 'Individual Forms/google_sheets_page_view.dart';
 
 class GatherInformationForm extends StatefulWidget {
   const GatherInformationForm({super.key});
