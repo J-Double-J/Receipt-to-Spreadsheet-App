@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:receipt_to_spreadsheet/Widgets/New%20User%20Setup/Individual%20Forms/categories_form.dart';
+import 'package:receipt_to_spreadsheet/Widgets/New%20User%20Setup/Individual%20Forms/create_pin_form.dart';
 import 'package:receipt_to_spreadsheet/Widgets/New%20User%20Setup/Individual%20Forms/finalizing_setup.dart';
 import 'package:receipt_to_spreadsheet/Widgets/New%20User%20Setup/start_user_set_up_introduction.dart';
 import 'package:receipt_to_spreadsheet/screen/starting_action_screen.dart';
@@ -31,6 +32,7 @@ class _GatherInformationFormState extends State<GatherInformationForm> {
           callback: _onContinue,
           getMetadataCallback: setSpreadsheetMetadataForFinalizing),
       OCRKeyPageView(callback: _onContinue),
+      CreatePINForm(callback: _onContinue),
       GetNameForm(callback: _onContinue),
       CategoriesForm(callback: _onContinue),
       FinalizingSetup(callback: _onContinue)

@@ -62,10 +62,9 @@ class _DefaultWorksheetFormState extends State<DefaultWorksheetForm> {
                         borderRadius: BorderRadius.circular(10.0),
                         color: Colors.white,
                         border: Border.all(width: 2, color: Colors.deepPurple)),
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
                     width: MediaQuery.of(context).size.width * 0.8,
                     margin: const EdgeInsets.symmetric(horizontal: 12),
-                    child: Expanded(
+                    child: Center(
                       child: DropdownButton(
                         underline: Container(),
                         value: _defaultWorksheet,
@@ -77,7 +76,13 @@ class _DefaultWorksheetFormState extends State<DefaultWorksheetForm> {
                         items: worksheets
                             .map<DropdownMenuItem<String>>((worksheet) {
                           return DropdownMenuItem<String>(
-                              value: worksheet, child: Text(worksheet));
+                            value: worksheet,
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width *
+                                  0.65, // Set the desired width for the menu item
+                              child: Text(worksheet),
+                            ),
+                          );
                         }).toList(),
                       ),
                     )),
