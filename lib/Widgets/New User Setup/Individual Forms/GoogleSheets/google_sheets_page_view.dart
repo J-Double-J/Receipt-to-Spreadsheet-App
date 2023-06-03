@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:receipt_to_spreadsheet/Widgets/New%20User%20Setup/Individual%20Forms/GoogleSheets/google_sheets_default_worksheet_form.dart';
+import 'package:receipt_to_spreadsheet/Widgets/New%20User%20Setup/Individual%20Forms/GoogleSheets/share_to_account.dart';
 
 import '../../../../Models/spreadsheet_metadata.dart';
 import 'google_sheets_url_form.dart';
 
 class GoogleSheetsPageView extends StatefulWidget {
   final void Function() callback;
-  final void Function(SpreadsheetMetadata) getMetadataCallback;
+  final void Function(SpreadsheetMetadata)? getMetadataCallback;
   const GoogleSheetsPageView(
-      {super.key, required this.callback, required this.getMetadataCallback});
+      {super.key, required this.callback, this.getMetadataCallback});
 
   @override
   State<GoogleSheetsPageView> createState() => _GoogleSheetsPageViewState();
@@ -47,7 +48,9 @@ class _GoogleSheetsPageViewState extends State<GoogleSheetsPageView> {
   }
 
   void _onContinue() {
-    widget.getMetadataCallback(_sheetMetadata!);
+    if (widget.getMetadataCallback != null) {
+      widget.getMetadataCallback!(_sheetMetadata!);
+    }
     widget.callback();
   }
 
@@ -64,6 +67,9 @@ class _GoogleSheetsPageViewState extends State<GoogleSheetsPageView> {
           });
         },
         children: [
+          ShareToAccount(
+            callback: _goToNextPage,
+          ),
           GoogleSheetsURLForm(
             callback: _goToNextPage,
             setSheetIDCallback: createSheetMetadata,
