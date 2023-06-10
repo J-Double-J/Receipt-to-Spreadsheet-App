@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:receipt_to_spreadsheet/Proxies/google_sheets_proxy.dart';
 
 import '../../../../Utilities/common.dart';
 
 class ShareToAccount extends StatelessWidget {
   final void Function() callback;
-  const ShareToAccount({super.key, required this.callback});
+  ShareToAccount({super.key, required this.callback});
 
   final emailElip =
       "receipt-to-spreadsheet@receipttospre..."; // Elipsis did not cut off at good place, so this is needed
-  final actualEmail =
-      "receipt-to-spreadsheet@receipttospreadsheet.iam.gserviceaccount.com";
+  final actualEmail = GoogleSheetsProxy.EMAIL_SERVICE;
 
   @override
   Widget build(BuildContext context) {

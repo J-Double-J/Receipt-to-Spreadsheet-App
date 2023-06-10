@@ -48,6 +48,8 @@ dependencies:
   flutter_secure_storage: ^8.0.0
   decimal: ^2.3.2
   crypto: ^3.0.3
+  googleapis: ^8.1.0
+  googleapis_auth: ^1.4.1
 
 dev_dependencies:
   flutter_test:

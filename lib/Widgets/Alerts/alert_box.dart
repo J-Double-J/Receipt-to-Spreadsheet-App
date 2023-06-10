@@ -37,17 +37,41 @@ class RecieptAlertBox extends StatelessWidget {
                         // height: MediaQuery.of(context).size.height * 0.3,
                         // width: MediaQuery.of(context).size.width,
                         padding: const EdgeInsets.fromLTRB(10, 2, 0, 2),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            title ?? "",
-                            style: const TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18,
-                                color: Colors.white),
-                            textAlign:
-                                centerTitle ? TextAlign.center : TextAlign.left,
-                          ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                title ?? "",
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 18,
+                                    color: Colors.white),
+                                textAlign: centerTitle
+                                    ? TextAlign.center
+                                    : TextAlign.left,
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(right: 4),
+                              child: Material(
+                                color: Colors.transparent,
+                                clipBehavior: Clip.antiAlias,
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20))),
+                                child: IconButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    icon: const Icon(
+                                      Icons.close,
+                                      color: Colors.white,
+                                    )),
+                              ),
+                            )
+                          ],
                         ),
                       )),
                   Flexible(

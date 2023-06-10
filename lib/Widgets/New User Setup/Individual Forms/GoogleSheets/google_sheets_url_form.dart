@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:receipt_to_spreadsheet/Proxies/google_sheets_proxy.dart';
 import 'package:receipt_to_spreadsheet/Utilities/google_sheets_id_extractor.dart';
 import 'package:receipt_to_spreadsheet/Utilities/secure_storage_constants.dart';
+import 'package:receipt_to_spreadsheet/Widgets/Alerts/alert_box.dart';
 
 import '../../../../Utilities/secure_storage.dart';
 import '../../../../Utilities/common.dart';
@@ -93,23 +95,59 @@ class _GoogleSheetsURLFormState extends State<GoogleSheetsURLForm> {
                           ),
                         )),
                     MaterialButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          bool save = true;
+
                           Common.closeKeyboard(context);
                           setState(() {
                             isLoading = true;
                           });
-                          if (_formKey.currentState!.validate()) {
-                            String id =
-                                GoogleSheetsIDExtractor.extractIDFromURL(
-                                    _urlController.text)!;
-                            SecureStorage.writeToKey(
-                                SecureStorageConstants.SPREADSHEET_IDS, id);
-                            widget.setSheetIDCallback(id).then((_) {
+
+                          final formValid = _formKey.currentState!.validate();
+                          final urlText = _urlController.text;
+
+                          if (formValid) {
+                            late String id;
+                            bool validPermissions;
+                            id = GoogleSheetsIDExtractor.extractIDFromURL(
+                                urlText)!;
+                            validPermissions =
+                                (await _haveWritePermissionsWithSpreadsheet(
+                                    id));
+                            if (!validPermissions) {
+                              // Nothing else should be done while its loading
+                              // ignore: use_build_context_synchronously
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return RecieptAlertBox(
+                                        title: "No Access",
+                                        bodyContent: Container(
+                                          margin: const EdgeInsets.all(8),
+                                          child: const Text(
+                                            "Our service account does not have access to edit your spreadsheet!\n\nDid you share your Spreadsheet to our email and did you give us the \"Editor\" role?",
+                                            style: TextStyle(fontSize: 18),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ));
+                                  });
+                              save = false;
+                            }
+
+                            if (save) {
+                              SecureStorage.writeToKey(
+                                  SecureStorageConstants.SPREADSHEET_IDS, id);
+                              widget.setSheetIDCallback(id).then((_) {
+                                setState(() {
+                                  isLoading = false;
+                                });
+                                widget.callback();
+                              });
+                            } else {
                               setState(() {
                                 isLoading = false;
                               });
-                              widget.callback();
-                            });
+                            }
                           } else {
                             setState(() {
                               isLoading = false;
@@ -137,5 +175,12 @@ class _GoogleSheetsURLFormState extends State<GoogleSheetsURLForm> {
         ],
       ),
     );
+  }
+
+  Future<bool> _haveWritePermissionsWithSpreadsheet(String sheetID) async {
+    var proxy = GoogleSheetsProxy(sheetID);
+    return await proxy.waitForCompleteSetUp().then((_) {
+      return proxy.hasWritePermission();
+    });
   }
 }
