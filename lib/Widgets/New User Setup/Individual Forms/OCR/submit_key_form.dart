@@ -84,8 +84,9 @@ class _SubmitKeyFormState extends State<SubmitKeyForm> {
                     child: SizedBox(
                         width: MediaQuery.of(context).size.width * 0.85,
                         child: TextFormField(
-                          style:
-                              TextStyle(color: Theme.of(context).primaryColor),
+                          style: const TextStyle(
+                              color: Color.fromARGB(255, 107, 49, 216)),
+                          cursorColor: const Color.fromARGB(255, 107, 49, 216),
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: Colors.white,

@@ -57,6 +57,7 @@ class _GetNameFormState extends State<GetNameForm> {
                       style: const TextStyle(
                           color: Color.fromARGB(255, 107, 49, 216),
                           fontSize: 18),
+                      cursorColor: const Color.fromARGB(255, 107, 49, 216),
                       decoration: InputDecoration(
                           errorBorder: const OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.pink),

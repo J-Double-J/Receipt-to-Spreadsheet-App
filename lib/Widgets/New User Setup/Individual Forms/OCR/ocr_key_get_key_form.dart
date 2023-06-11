@@ -59,7 +59,7 @@ class _OCRKeyFormGetKeyState extends State<OCRKeyFormGetKey> {
                             child: const Text(
                               "Tell me More",
                               style: TextStyle(
-                                  color: Colors.purple,
+                                  color: Color.fromARGB(255, 107, 49, 216),
                                   fontWeight: FontWeight.w500,
                                   fontSize: 20),
                             ),
@@ -80,7 +80,7 @@ class _OCRKeyFormGetKeyState extends State<OCRKeyFormGetKey> {
                             child: const Text(
                               "Let me see all Plans",
                               style: TextStyle(
-                                  color: Colors.purple,
+                                  color: Color.fromARGB(255, 107, 49, 216),
                                   fontWeight: FontWeight.w500,
                                   fontSize: 20),
                             ),

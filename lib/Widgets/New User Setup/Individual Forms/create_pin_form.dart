@@ -88,6 +88,9 @@ class _CreatePINFormState extends State<CreatePINForm> {
                             FilteringTextInputFormatter.digitsOnly
                           ],
                           obscureText: true,
+                          cursorColor: const Color.fromARGB(255, 107, 49, 216),
+                          style: const TextStyle(
+                              color: Color.fromARGB(255, 107, 49, 216)),
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: Colors.white,
@@ -127,6 +130,9 @@ class _CreatePINFormState extends State<CreatePINForm> {
                             FilteringTextInputFormatter.digitsOnly
                           ],
                           obscureText: true,
+                          cursorColor: const Color.fromARGB(255, 107, 49, 216),
+                          style: const TextStyle(
+                              color: Color.fromARGB(255, 107, 49, 216)),
                           validator: validateFields,
                           decoration: InputDecoration(
                             filled: true,

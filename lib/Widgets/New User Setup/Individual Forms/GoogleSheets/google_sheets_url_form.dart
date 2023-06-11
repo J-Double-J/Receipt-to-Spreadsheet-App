@@ -57,8 +57,10 @@ class _GoogleSheetsURLFormState extends State<GoogleSheetsURLForm> {
                           margin: const EdgeInsets.symmetric(horizontal: 12),
                           child: TextFormField(
                             controller: _urlController,
-                            style: TextStyle(
-                                color: Theme.of(context).primaryColor),
+                            style: const TextStyle(
+                                color: Color.fromARGB(255, 107, 49, 216)),
+                            cursorColor:
+                                const Color.fromARGB(255, 107, 49, 216),
                             decoration: InputDecoration(
                                 errorBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(color: Colors.pink),
