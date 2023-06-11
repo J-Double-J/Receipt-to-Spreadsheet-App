@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:receipt_to_spreadsheet/Models/spreadsheet_metadata.dart';
 import 'package:receipt_to_spreadsheet/Utilities/file_manager.dart';
 import 'package:receipt_to_spreadsheet/Utilities/secure_storage.dart';
 import 'package:receipt_to_spreadsheet/Utilities/secure_storage_constants.dart';
 import 'package:receipt_to_spreadsheet/Widgets/Alerts/text_input_alert.dart';
+import 'package:receipt_to_spreadsheet/Widgets/New%20User%20Setup/Individual%20Forms/GoogleSheets/google_sheets_page_view.dart';
 import 'package:receipt_to_spreadsheet/Widgets/Scaffold/receipt_scaffold.dart';
 import 'package:receipt_to_spreadsheet/auth/hash_utility.dart';
+
+import '../Utilities/common.dart';
+import '../Widgets/New User Setup/Individual Forms/OCR/ocr_key_page_view.dart';
+import '../Widgets/singular_form_display.dart';
 
 class ConnectionSettings extends StatefulWidget {
   const ConnectionSettings({super.key});
@@ -17,6 +21,7 @@ class ConnectionSettings extends StatefulWidget {
 
 class _ConnectionSettingsState extends State<ConnectionSettings> {
   late Future<List<SpreadsheetMetadata>> metadataObjects;
+  late List<SpreadsheetMetadata> displayedMetaList = [];
 
   // Has been revealed at least once this session
   bool revealed = false;
@@ -105,22 +110,87 @@ class _ConnectionSettingsState extends State<ConnectionSettings> {
                               } else if (snapshot.hasError) {
                                 return const Text("Error");
                               } else {
-                                List<SpreadsheetMetadata> metadataList =
-                                    snapshot.data!;
+                                displayedMetaList = snapshot.data!;
                                 return ListView.builder(
                                     shrinkWrap: true,
                                     scrollDirection: Axis.vertical,
-                                    itemCount: metadataList.length + 1,
+                                    itemCount: displayedMetaList.length + 1,
                                     itemBuilder:
                                         (BuildContext context, int index) {
-                                      if (index == metadataList.length) {
-                                        return const ListTile(
-                                          title: Text("Connect More"),
+                                      if (index == displayedMetaList.length) {
+                                        return Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Container(
+                                              margin:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 10,
+                                                      horizontal: 10),
+                                              child: Material(
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                                color: Colors.white,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    Widget form =
+                                                        GoogleSheetsPageView(
+                                                      callback: () =>
+                                                          Navigator.pop(
+                                                              context),
+                                                      getMetadataCallback:
+                                                          _saveNewMetadata,
+                                                    );
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                SingularFormDisplay(
+                                                                    form:
+                                                                        form)));
+                                                  },
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                  child: Container(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        vertical: 10,
+                                                        horizontal: 20),
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20),
+                                                        border: Border.all(
+                                                            color: const Color
+                                                                    .fromARGB(
+                                                                255,
+                                                                107,
+                                                                49,
+                                                                216),
+                                                            width: 2)),
+                                                    child: const Text(
+                                                      "Add New Spreadsheet",
+                                                      style: TextStyle(
+                                                          fontSize: 15.5,
+                                                          color: Color.fromARGB(
+                                                              255,
+                                                              107,
+                                                              49,
+                                                              216),
+                                                          fontWeight:
+                                                              FontWeight.w600),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         );
                                       }
                                       SpreadsheetMetadata metadata =
-                                          metadataList[index];
-                                      bool canDelete = metadataList.length > 1;
+                                          displayedMetaList[index];
+                                      bool canDelete =
+                                          displayedMetaList.length > 1;
                                       return IntrinsicHeight(
                                           child: ListTile(
                                         visualDensity:
@@ -140,9 +210,29 @@ class _ConnectionSettingsState extends State<ConnectionSettings> {
                                         trailing: IconButton(
                                           disabledColor: Colors.grey,
                                           icon: const Icon(Icons.delete),
-                                          onPressed: canDelete ? () {} : null,
-                                          color: const Color.fromARGB(
-                                              255, 107, 49, 216),
+                                          onPressed: canDelete
+                                              ? () {
+                                                  _removeSpreadsheetFromStorage(
+                                                      index);
+                                                  Common.snackbarMessage(
+                                                      context,
+                                                      "Deleted connection.",
+                                                      duration: const Duration(
+                                                          seconds: 2,
+                                                          milliseconds: 500));
+                                                }
+                                              : () {
+                                                  Common.snackbarMessage(
+                                                      context,
+                                                      "You must have at least one spreadsheet connection.",
+                                                      duration: const Duration(
+                                                          seconds: 2,
+                                                          milliseconds: 500));
+                                                },
+                                          color: canDelete
+                                              ? const Color.fromARGB(
+                                                  255, 107, 49, 216)
+                                              : Colors.grey,
                                         ),
                                       ));
                                     });
@@ -193,20 +283,8 @@ class _ConnectionSettingsState extends State<ConnectionSettings> {
                                           iconSize: 20,
                                           onPressed: !textIsHidden
                                               ? () {
-                                                  Clipboard.setData(
-                                                      ClipboardData(
-                                                          text: ocrKeyText));
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(
-                                                    const SnackBar(
-                                                      duration:
-                                                          Duration(seconds: 1),
-                                                      content: Center(
-                                                        child: Text(
-                                                            'Copied to Clipboard.'),
-                                                      ),
-                                                    ),
-                                                  );
+                                                  Common.copyToClipboard(
+                                                      context, ocrKeyText);
                                                 }
                                               : null,
                                           icon: const Icon(Icons.content_copy)),
@@ -217,7 +295,6 @@ class _ConnectionSettingsState extends State<ConnectionSettings> {
                                                   setState(() {
                                                     textIsHidden =
                                                         !textIsHidden;
-                                                    print(textIsHidden);
                                                     _toggleOcrKeyText();
                                                   });
                                                 }
@@ -227,7 +304,6 @@ class _ConnectionSettingsState extends State<ConnectionSettings> {
                                                     setState(() {
                                                       revealed = result;
                                                       textIsHidden = !result;
-                                                      print(textIsHidden);
                                                       _toggleOcrKeyText();
                                                     });
                                                   });
@@ -252,7 +328,18 @@ class _ConnectionSettingsState extends State<ConnectionSettings> {
                                       borderRadius: BorderRadius.circular(20),
                                       color: Colors.white,
                                       child: InkWell(
-                                        onTap: () {},
+                                        onTap: () {
+                                          Widget form = OCRKeyPageView(
+                                              callback: () =>
+                                                  Navigator.pop(context));
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      SingularFormDisplay(
+                                                          form: form)));
+                                          resetRevealState();
+                                        },
                                         borderRadius: BorderRadius.circular(20),
                                         child: Container(
                                           padding: const EdgeInsets.symmetric(
@@ -326,7 +413,7 @@ class _ConnectionSettingsState extends State<ConnectionSettings> {
         builder: (BuildContext context) {
           return TextInputAlert(
             title: "PIN:",
-            alertColor: Color.fromARGB(255, 107, 49, 216),
+            alertColor: const Color.fromARGB(255, 107, 49, 216),
             validator: _pinValidator,
             validationContinue: _validatePIN,
           );
@@ -337,5 +424,33 @@ class _ConnectionSettingsState extends State<ConnectionSettings> {
     }
 
     return result;
+  }
+
+  void resetRevealState() {
+    setState(() {
+      revealed = false;
+      textIsHidden = true;
+      ocrKeyText = hiddenText;
+      lastKeyText = null;
+    });
+  }
+
+  void _saveNewMetadata(SpreadsheetMetadata metadata) {
+    setState(() {
+      displayedMetaList.add(metadata);
+    });
+    FileManager.saveSpreadsheetMetadata(displayedMetaList);
+  }
+
+  void _removeSpreadsheetFromStorage(int index) {
+    if (index > displayedMetaList.length - 1) {
+      throw ArgumentError.value(index, "index", "Index out of bounds");
+    }
+
+    setState(() {
+      displayedMetaList.removeAt(index);
+    });
+
+    FileManager.saveSpreadsheetMetadata(displayedMetaList);
   }
 }
