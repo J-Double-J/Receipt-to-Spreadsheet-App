@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class RecieptAlertBox extends StatelessWidget {
-  const RecieptAlertBox(
+class ReceiptAlertBox extends StatelessWidget {
+  const ReceiptAlertBox(
       {super.key,
       this.title,
       this.bodyContent,
@@ -21,7 +21,6 @@ class RecieptAlertBox extends StatelessWidget {
           child: Container(
               constraints: BoxConstraints(
                   minHeight: MediaQuery.of(context).size.height * 0.35),
-              // height: MediaQuery.of(context).size.height * 0.35,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -34,8 +33,6 @@ class RecieptAlertBox extends StatelessWidget {
                             borderRadius: const BorderRadius.only(
                                 topLeft: Radius.circular(20),
                                 topRight: Radius.circular(20))),
-                        // height: MediaQuery.of(context).size.height * 0.3,
-                        // width: MediaQuery.of(context).size.width,
                         padding: const EdgeInsets.fromLTRB(10, 2, 0, 2),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,

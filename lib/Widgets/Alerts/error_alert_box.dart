@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:receipt_to_spreadsheet/Widgets/Alerts/alert_box.dart';
+import 'package:receipt_to_spreadsheet/Widgets/Alerts/receipt_alert_box.dart';
 
 class ErrorAlertBox extends StatelessWidget {
   final String errorMessage;
@@ -9,7 +9,7 @@ class ErrorAlertBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RecieptAlertBox(
+    return ReceiptAlertBox(
       title: "Error",
       alertColor: Colors.red,
       bodyContent: Column(children: [

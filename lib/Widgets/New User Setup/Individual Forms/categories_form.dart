@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:receipt_to_spreadsheet/Utilities/secure_storage.dart';
 import 'package:receipt_to_spreadsheet/Utilities/secure_storage_constants.dart';
-import 'package:receipt_to_spreadsheet/Widgets/Alerts/alert_box.dart';
+import 'package:receipt_to_spreadsheet/Widgets/Alerts/receipt_alert_box.dart';
 import 'package:receipt_to_spreadsheet/Widgets/Alerts/error_alert_box.dart';
 
 class CategoriesForm extends StatefulWidget {
@@ -98,7 +98,7 @@ class _CategoriesFormState extends State<CategoriesForm>
                                       String? addedValue = await showDialog(
                                           context: context,
                                           builder: (builder) {
-                                            return RecieptAlertBox(
+                                            return ReceiptAlertBox(
                                               title: "New Category",
                                               bodyContent:
                                                   _addAlertBodyContent(),

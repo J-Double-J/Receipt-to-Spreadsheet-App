@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:receipt_to_spreadsheet/Widgets/Alerts/alert_box.dart';
+import 'package:receipt_to_spreadsheet/Widgets/Alerts/receipt_alert_box.dart';
 
 class SlideInformationAlert extends StatefulWidget {
   List<Widget> content;
@@ -41,7 +41,7 @@ class _SlideInformationAlertState extends State<SlideInformationAlert> {
 
   @override
   Widget build(BuildContext context) {
-    return RecieptAlertBox(
+    return ReceiptAlertBox(
       title: "How to Send to Spreadsheet",
       centerTitle: true,
       bodyContent: Column(children: [

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:receipt_to_spreadsheet/Widgets/Alerts/alert_box.dart';
+import 'package:receipt_to_spreadsheet/Widgets/Alerts/receipt_alert_box.dart';
 
 class TextInputAlert extends StatefulWidget {
   final String? title;
@@ -32,7 +32,7 @@ class _TextInputAlertState extends State<TextInputAlert> {
 
   @override
   Widget build(BuildContext context) {
-    return RecieptAlertBox(
+    return ReceiptAlertBox(
       title: widget.title ?? "",
       alertColor: widget.alertColor,
       bodyContent: Expanded(

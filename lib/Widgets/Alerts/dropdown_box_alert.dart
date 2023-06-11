@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:receipt_to_spreadsheet/Widgets/Alerts/alert_box.dart';
+import 'package:receipt_to_spreadsheet/Widgets/Alerts/receipt_alert_box.dart';
 
 class DropdownBoxAlert extends StatefulWidget {
   final Function(String?, bool) onSave;
@@ -32,7 +32,7 @@ class _DropdownBoxAlertState extends State<DropdownBoxAlert> {
 
   @override
   Widget build(BuildContext context) {
-    return RecieptAlertBox(
+    return ReceiptAlertBox(
       title: "Categorize Price",
       bodyContent: Flexible(
         flex: 82,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:receipt_to_spreadsheet/Proxies/google_sheets_proxy.dart';
 import 'package:receipt_to_spreadsheet/Utilities/google_sheets_id_extractor.dart';
 import 'package:receipt_to_spreadsheet/Utilities/secure_storage_constants.dart';
-import 'package:receipt_to_spreadsheet/Widgets/Alerts/alert_box.dart';
+import 'package:receipt_to_spreadsheet/Widgets/Alerts/receipt_alert_box.dart';
 
 import '../../../../Utilities/secure_storage.dart';
 import '../../../../Utilities/common.dart';
@@ -122,7 +122,7 @@ class _GoogleSheetsURLFormState extends State<GoogleSheetsURLForm> {
                               showDialog(
                                   context: context,
                                   builder: (BuildContext context) {
-                                    return RecieptAlertBox(
+                                    return ReceiptAlertBox(
                                         title: "No Access",
                                         bodyContent: Container(
                                           margin: const EdgeInsets.all(8),

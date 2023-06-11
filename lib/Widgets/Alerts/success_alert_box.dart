@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:receipt_to_spreadsheet/Widgets/Alerts/alert_box.dart';
+import 'package:receipt_to_spreadsheet/Widgets/Alerts/receipt_alert_box.dart';
 
 class SuccessAlertBox extends StatelessWidget {
   const SuccessAlertBox({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return RecieptAlertBox(
+    return ReceiptAlertBox(
       title: "Success",
       alertColor: Colors.green,
       bodyContent: Column(

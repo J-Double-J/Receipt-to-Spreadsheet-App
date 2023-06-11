@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:receipt_to_spreadsheet/Widgets/Alerts/alert_box.dart';
+import 'package:receipt_to_spreadsheet/Widgets/Alerts/receipt_alert_box.dart';
 
 class GeneralSettings extends StatefulWidget {
   const GeneralSettings({super.key});
@@ -47,7 +47,7 @@ class _GeneralSettingsState extends State<GeneralSettings> {
     return showDialog(
         context: context,
         builder: (context) {
-          return RecieptAlertBox(
+          return ReceiptAlertBox(
             title: "Change Purchaser Name",
             alertColor: Theme.of(context).primaryColor,
             bodyContent: Column(
